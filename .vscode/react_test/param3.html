@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+ 
+<div id="example"></div>
+<script type="text/babel">
+
+
+class Children1 extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  handerClick(){
+    this.props.changeChild2Color('skyblue') 
+    // 改变兄弟组件的颜色 把changeChild2Color的参数传给父
+  }
+  render(){
+    return(
+      <div>
+        <div>children1</div>
+        <button onClick={(e)=>{this.handerClick(e)}}>改变children2背景</button>
+      </div>
+    )
+  }
+}
+class Children2 extends React.Component{
+    constructor(props){
+      super(props);
+    }
+    render(){
+      return(
+        <div style={{background:this.props.bgcolor}}>
+ 
+          <div>children2 背景色 {this.props.bgcolor}</div>
+
+        </div>
+      )
+    }
+  }  
+
+  class Father extends React.Component{
+    constructor(props){
+      super(props)
+      this.state = {
+        child2bgcolor:'pink'
+      }
+    }
+    onchild2bgChange(color){
+      this.setState({
+        child2bgcolor:color
+      })
+    }
+    render(){
+      return (<div>
+        <Children1 changeChild2Color={(color)=>{this.onchild2bgChange(color)}} />
+        <Children2 bgcolor={this.state.child2bgcolor} />
+      </div>)
+    }
+}
+
+ReactDOM.render(
+    <Father />,
+    document.getElementById('example')
+);
+</script>
+ 
+</body>
+</html>

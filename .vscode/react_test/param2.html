@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+ 
+<div id="example"></div>
+<script type="text/babel">
+
+
+class Children extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  handerClick(){
+    this.props.changeColor('skyblue') // 执行父组件的changeColor 并传参 必须和父组件中的函数一模一样
+  }
+  render(){
+    return(
+      <div>
+        <div>父组件的背景色{this.props.bgcolor}</div> 
+        <button onClick={(e)=>{this.handerClick(e)}}>改变父组件背景</button> 
+      </div>
+    )
+  }
+}
+
+class Father extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      bgcolor:'pink'
+    }
+  }
+  bgChange(color){
+    this.setState({
+      bgcolor:color
+    })
+  }
+  render(){
+
+    return (<div style={{background:this.state.bgcolor}}>
+        
+      <Children bgcolor={this.state.bgcolor} changeColor={(color)=>{this.bgChange(color)}} /> 
+                       
+    </div>)
+  }
+}
+
+ReactDOM.render(
+    <Father />,
+    document.getElementById('example')
+);
+</script>
+ 
+</body>
+</html>
