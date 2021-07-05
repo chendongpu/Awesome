@@ -1,18 +1,25 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation'
-import {createStackNavigator} from 'react-navigation-stack'
-import BottomNavigator from './page/root/rootPage'
-const AppStack=createStackNavigator(
-    {
-        BottomNavigation:{
-            screen:BottomNavigator,
-            navigationOption:{
-                headerShow:false
-            }
-        }
-    },{
-        mode:'modal',
-        headerMode:'none'
+import SplashScreen from 'react-native-splash-screen';
+
+import Navigator from './navigator'
+
+import {
+    View,
+} from 'react-native';
+
+export default class App extends React.Component {
+    componentDidMount() {
+        // 在入口文件处隐藏掉启动页
+        SplashScreen.hide(); // 关闭启动屏幕
     }
-);
-export default createAppContainer(AppStack);
+    render() {
+        return (<View style={{flex:1}}>
+            <Navigator />
+        </View>)
+    }
+}
+
+
+
+
+
